@@ -27,13 +27,13 @@ mod app {
         let io = IO::new(peripherals.GPIO, peripherals.IO_MUX);
         let mut button = io.pins.gpio9.into_pull_down_input();
         button.listen(Event::FallingEdge);
+        foo::spawn().unwrap();
         (Shared {}, Local { button })
     }
 
     #[idle()]
     fn idle(_: idle::Context) -> ! {
         println!("idle");
-        foo::spawn().unwrap();
         loop {}
     }
 
